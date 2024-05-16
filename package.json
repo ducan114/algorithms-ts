@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "lint": "eslint",
+    "lint": "eslint .",
     "test": "jest"
   },
   "keywords": [
