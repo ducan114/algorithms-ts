@@ -46,6 +46,7 @@ export abstract class Heap<T> extends Collection {
     if (this.isEmpty()) throw new NoSuchElementError('Heap is empty');
     const item = this._items[0];
     exchange(this._items, 0, this.size() - 1);
+    this._items.pop();
     this._decrementSize();
     heapifyDown(this._items, this._canBeParentFn, 0);
     return item;
@@ -154,6 +155,7 @@ export function heapifyDown<T>(
     // Move the item down.
     exchange(heap, idx, childIdx);
     idx = childIdx;
+    childIdx = 2 * idx + 1;
   }
 }
 
