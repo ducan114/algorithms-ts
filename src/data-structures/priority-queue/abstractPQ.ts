@@ -59,9 +59,9 @@ export abstract class AbstractPQ<Item, Priority> extends Collection {
     if (this.isEmpty()) throw new NoSuchElementError('Priority queue is empty');
     const item = this._heap[0];
     this._exchange(0, this.size() - 1);
+    this._deleteItem(this.size() - 1);
     this._decrementSize();
     this._heapifyDown(0);
-    this._deleteItem(item);
     return item;
   }
 
@@ -106,10 +106,10 @@ export abstract class AbstractPQ<Item, Priority> extends Collection {
       throw new NoSuchElementError('Item is not in this priority queue');
     const idx = this._getIndex(item);
     this._exchange(idx, this.size() - 1);
+    this._deleteItem(this.size() - 1);
     this._decrementSize();
     this._heapifyUp(idx);
     this._heapifyDown(idx);
-    this._deleteItem(item);
   }
 
   /**
@@ -156,6 +156,7 @@ export abstract class AbstractPQ<Item, Priority> extends Collection {
       // Move the item down.
       this._exchange(idx, childIdx);
       idx = childIdx;
+      childIdx = 2 * idx + 1;
     }
   }
 
@@ -197,11 +198,12 @@ export abstract class AbstractPQ<Item, Priority> extends Collection {
   protected abstract _getIndex(item: Item): number;
 
   /**
-   * Removes the associated priority and index in the heap of an item.
+   * Removes the associated priority and index in the heap of an item at the
+   * given heap index.
    *
-   * @param item An item
+   * @param idx Index of the item
    */
-  protected abstract _deleteItem(item: Item): void;
+  protected abstract _deleteItem(idx: number): void;
 
   /**
    * Determines whether an item can be parent of another item in the heap.

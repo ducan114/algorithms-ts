@@ -97,13 +97,17 @@ export abstract class IndexedPQ<T> extends AbstractPQ<number, T> {
   protected _setPriority(item: number, priority: T): void {
     this._priorities[item] = priority;
   }
+
   protected _setIndex(item: number, idx: number): void {
     this._idxs[item] = idx;
   }
+
   protected _getIndex(item: number): number {
     return this._idxs[item];
   }
-  protected _deleteItem(item: number): void {
+
+  protected _deleteItem(idx: number): void {
+    const item = this._heap[idx];
     this._idxs[item] = -1;
     // To help with garbage collection.
     this._priorities[item] = null;
